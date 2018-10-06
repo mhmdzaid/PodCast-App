@@ -9,12 +9,12 @@
 import Foundation
 
 
-struct PodCast{
-    let name :String
+struct PodCast : Decodable{
+    let trackName :String
     let artistName : String
-    
+
     init(name : String , artistName : String) {
-        self.name = name
+        self.trackName = name
         self.artistName = artistName
     }
 }

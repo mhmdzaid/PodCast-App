@@ -10,7 +10,7 @@ import UIKit
 import Alamofire
 class podCastSearchController : UITableViewController,UISearchBarDelegate{
     
-    let podCasts = [PodCast(name : "behind the zone",artistName : "Moahemd Zead"),
+    var podCasts = [PodCast(name : "behind the zone",artistName : "Moahemd Zead"),
                     PodCast(name : "on the fire",artistName : "Michel jole")]
     
     let cellID = "cellID"
@@ -32,18 +32,14 @@ class podCastSearchController : UITableViewController,UISearchBarDelegate{
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         print(searchText)
         //Implementing Alamofire to get podcasts from the API
-        let url = URL(string: "https://itunes.apple.com/search?term=\(searchText)")
-        Alamofire.request(url!).responseData { (response) in
-            if let err = response.error{
-                print(err)
-                return
-            }
-            guard let data  = response.data else{return}
-            let dummyString = String(data: data, encoding: .utf8)
-            print(dummyString ?? "")
+        APIService.shared.fetchPodCasts(searchText: searchText) { (returnedPodCasts) in
+            self.podCasts = returnedPodCasts
+            self.tableView.reloadData()
         }
+   
     }
     
+   
     
     //MARK:- tableView Methods
     
@@ -58,7 +54,7 @@ class podCastSearchController : UITableViewController,UISearchBarDelegate{
         let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath)
         let podCast = podCasts[indexPath.row]
         cell.textLabel?.numberOfLines = -1 //inifinty number of lines
-        cell.textLabel?.text = "\(podCast.name)\n \(podCast.artistName)"
+        cell.textLabel?.text = "\(podCast.trackName)\n \(podCast.artistName)"
         cell.imageView?.image = #imageLiteral(resourceName: "appicon")
         return cell
     }
