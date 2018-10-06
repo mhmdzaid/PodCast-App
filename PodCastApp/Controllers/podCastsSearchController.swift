@@ -19,9 +19,10 @@ class podCastSearchController : UITableViewController,UISearchBarDelegate{
     override func viewDidLoad() {
         super.viewDidLoad()
          setUpSearchController()
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellID)
+         setUpTableView()
     }
     
+ 
     fileprivate func setUpSearchController(){
         let searchController = UISearchController(searchResultsController: nil)
         navigationItem.searchController = searchController
@@ -29,6 +30,15 @@ class podCastSearchController : UITableViewController,UISearchBarDelegate{
         searchController.searchBar.delegate = self
         searchController.dimsBackgroundDuringPresentation = false
     }
+    
+    
+    fileprivate func setUpTableView(){
+        let nib = UINib(nibName: "PodCastCell", bundle: nil)
+        tableView.register(nib, forCellReuseIdentifier: cellID)
+    }
+    
+    
+    
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         print(searchText)
         //Implementing Alamofire to get podcasts from the API
@@ -51,12 +61,12 @@ class podCastSearchController : UITableViewController,UISearchBarDelegate{
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath)
-        let podCast = podCasts[indexPath.row]
-        cell.textLabel?.numberOfLines = -1 //inifinty number of lines
-        cell.textLabel?.text = "\(podCast.trackName)\n \(podCast.artistName)"
-        cell.imageView?.image = #imageLiteral(resourceName: "appicon")
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath) as? podCastTableViewCell else{return UITableViewCell()}
+        cell.podcast = podCasts[indexPath.row]
         return cell
     }
     
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 130
+    }
 }
