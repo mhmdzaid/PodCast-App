@@ -22,15 +22,15 @@ class EpisodesController : UITableViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpTableView()
-        
     }
     
     
-    struct Episode{
-        let title : String
-    }
+    
     //MARK:- Networking
+    
+    
     fileprivate func fetchEpisodes(){
+    
         guard var feedURLString = podCast?.feedUrl else{return}
         feedURLString = feedURLString.contains("https") ? feedURLString : feedURLString.replacingOccurrences(of: "http", with: "https") //replacing Http with Https
         guard let feedURL = URL(string: feedURLString)else {return}
@@ -39,12 +39,12 @@ class EpisodesController : UITableViewController{
             switch result {
             case let .rss(feed):
                 feed.items?.forEach({ (feedItem) in
-                    let episod = Episode(title: feedItem.title!)
-                    self.Episodes.append(episod)
-                    DispatchQueue.main.async {
-                        self.tableView.reloadData()
-                    }
+                    let episode = Episode(item: feedItem)
+                    self.Episodes.append(episode)
                 })
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
                 break
             case .failure(_):
                 break
@@ -63,15 +63,23 @@ class EpisodesController : UITableViewController{
     
     fileprivate func setUpTableView(){
         tableView.tableFooterView = UIView() //eliminates separator lines in tableView
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier:cellID)
+        let nib = UINib(nibName: "EpisodeCellTableViewCell", bundle: nil)
+        tableView.register(nib, forCellReuseIdentifier: cellID)
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: cellID) else{
-            return UITableViewCell()}
-        cell.textLabel?.text = Episodes[indexPath.row].title
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: cellID) as? EpisodeCellTableViewCell
+            else{
+            return UITableViewCell()
+        }
+        let episode = Episodes[indexPath.row]
+        cell.episode = episode
         return cell
+    }
+    
+   override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 134
     }
     
     
