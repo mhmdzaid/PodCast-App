@@ -32,6 +32,7 @@ class podCastSearchController : UITableViewController,UISearchBarDelegate{
     
     
     fileprivate func setUpTableView(){
+        self.definesPresentationContext = true
         let nib = UINib(nibName: "PodCastCell", bundle: nil)
         tableView.register(nib, forCellReuseIdentifier: cellID)
     }
@@ -55,6 +56,12 @@ class podCastSearchController : UITableViewController,UISearchBarDelegate{
     
     //MARK:- tableView Methods
     
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let epsiodesController = EpisodesController()
+        epsiodesController.podCast = podCasts[indexPath.row]
+        navigationController?.pushViewController(epsiodesController, animated: true)
+   
+    }
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         tableView.tableFooterView = UIView()
         let label = UILabel()
@@ -66,7 +73,7 @@ class podCastSearchController : UITableViewController,UISearchBarDelegate{
     }
     
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 250
+        return podCasts.count > 0 ? 0 : 250
     }
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return podCasts.count
