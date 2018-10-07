@@ -8,7 +8,7 @@
 
 import Foundation
 import UIKit
-
+import SDWebImage
 class podCastTableViewCell : UITableViewCell{
     
     @IBOutlet weak var podCastImage: UIImageView!
@@ -20,6 +20,9 @@ class podCastTableViewCell : UITableViewCell{
         didSet{
             trackName.text = podcast.trackName
             artistName.text = podcast.artistName
+            episodeCount.text = "\(podcast.trackCount ?? 0) Episodes"
+            guard let url = URL(string: podcast.artworkUrl600 ?? "") else{return}
+            podCastImage.sd_setImage(with: url, completed: nil)
         }
     }
 

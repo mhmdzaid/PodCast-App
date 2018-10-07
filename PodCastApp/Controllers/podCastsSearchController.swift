@@ -10,8 +10,7 @@ import UIKit
 import Alamofire
 class podCastSearchController : UITableViewController,UISearchBarDelegate{
     
-    var podCasts = [PodCast(name : "behind the zone",artistName : "Moahemd Zead"),
-                    PodCast(name : "on the fire",artistName : "Michel jole")]
+    var podCasts = [PodCast]()
     
     let cellID = "cellID"
     
@@ -41,6 +40,7 @@ class podCastSearchController : UITableViewController,UISearchBarDelegate{
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         print(searchText)
+        
         //Implementing Alamofire to get podcasts from the API
         APIService.shared.fetchPodCasts(searchText: searchText) { (returnedPodCasts) in
             self.podCasts = returnedPodCasts
@@ -49,10 +49,25 @@ class podCastSearchController : UITableViewController,UISearchBarDelegate{
    
     }
     
+    
+    
    
     
     //MARK:- tableView Methods
     
+    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        tableView.tableFooterView = UIView()
+        let label = UILabel()
+        label.text = "What you are searching for ?"
+        label.font = UIFont.systemFont(ofSize: 19, weight: .semibold)
+        label.textColor = UIColor.purple
+        label.textAlignment = .center
+        return label
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 250
+    }
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return podCasts.count
     }
