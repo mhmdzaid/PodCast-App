@@ -8,17 +8,15 @@
 
 import Foundation
 import UIKit
-
+import FeedKit
 class EpisodesController : UITableViewController{
-    fileprivate let cellID = "cellId"
-    var Episodes = [Episode(title: "first"),
-                    Episode(title: "second"),
-                    Episode(title: "third")]
-
     
+    fileprivate let cellID = "cellId"
+    var Episodes = [Episode]()
     var podCast : PodCast?{
         didSet{
             self.navigationItem.title = podCast?.trackName
+            fetchEpisodes()
         }
     }
     override func viewDidLoad() {
@@ -30,6 +28,30 @@ class EpisodesController : UITableViewController{
     
     struct Episode{
         let title : String
+    }
+    //MARK:- Networking
+    fileprivate func fetchEpisodes(){
+        guard var feedURLString = podCast?.feedUrl else{return}
+        feedURLString = feedURLString.contains("https") ? feedURLString : feedURLString.replacingOccurrences(of: "http", with: "https") //replacing Http with Https
+        guard let feedURL = URL(string: feedURLString)else {return}
+        let feedParser = FeedParser(URL: feedURL)
+        feedParser?.parseAsync(result: { (result) in
+            switch result {
+            case let .rss(feed):
+                feed.items?.forEach({ (feedItem) in
+                    let episod = Episode(title: feedItem.title!)
+                    self.Episodes.append(episod)
+                    DispatchQueue.main.async {
+                        self.tableView.reloadData()
+                    }
+                })
+                break
+            case .failure(_):
+                break
+            default :
+                print("result is sometype ...")
+            }
+        })
     }
     
     //MARK:- tableView Methods
