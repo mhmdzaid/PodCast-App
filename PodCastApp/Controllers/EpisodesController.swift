@@ -32,26 +32,14 @@ class EpisodesController : UITableViewController{
     fileprivate func fetchEpisodes(){
     
         guard var feedURLString = podCast?.feedUrl else{return}
-        feedURLString = feedURLString.contains("https") ? feedURLString : feedURLString.replacingOccurrences(of: "http", with: "https") //replacing Http with Https
-        guard let feedURL = URL(string: feedURLString)else {return}
-        let feedParser = FeedParser(URL: feedURL)
-        feedParser?.parseAsync(result: { (result) in
-            switch result {
-            case let .rss(feed):
-                feed.items?.forEach({ (feedItem) in
-                    let episode = Episode(item: feedItem)
-                    self.Episodes.append(episode)
-                })
-                DispatchQueue.main.async {
-                    self.tableView.reloadData()
-                }
-                break
-            case .failure(_):
-                break
-            default :
-                print("result is sometype ...")
+        feedURLString = feedURLString.toHTTPSecured()  //replacing Http with Https
+        APIService.shared.fetchEpisodes(url: feedURLString) { (returnedEpisodes) in
+            self.Episodes = returnedEpisodes
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
             }
-        })
+        }
+       
     }
     
     //MARK:- tableView Methods

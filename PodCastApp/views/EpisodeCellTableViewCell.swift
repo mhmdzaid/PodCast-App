@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+import SDWebImage
 class EpisodeCellTableViewCell: UITableViewCell {
     
     var episode : Episode!{
@@ -17,6 +17,13 @@ class EpisodeCellTableViewCell: UITableViewCell {
             episodeDate.text = dateFormatter.string(from: episode.date)
             EpisodeTitle.text = episode.title
             episodeDescription.text = episode.description
+            if let _ = episode.imageUrl{
+                let imageUrlString = episode.imageUrl!.toHTTPSecured()
+                let url = URL(string: imageUrlString)
+                episodeImageView.sd_setImage(with: url!, completed: nil)
+            }
+           
+            
         }
 
     }
