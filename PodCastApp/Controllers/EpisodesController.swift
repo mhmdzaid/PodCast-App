@@ -44,9 +44,19 @@ class EpisodesController : UITableViewController{
     
     //MARK:- tableView Methods
     
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let episode = self.Episodes[indexPath.row]
+        let window = UIApplication.shared.keyWindow
+        let playerDetailView = Bundle.main.loadNibNamed("playerAudioDetails", owner: self, options: nil)?.first as! PlayerAudioDetail
+        playerDetailView.episodeToPlay = episode
+        playerDetailView.frame = self.view.frame
+        window?.addSubview(playerDetailView)
+    }
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return Episodes.count
     }
+    
     
     
     fileprivate func setUpTableView(){

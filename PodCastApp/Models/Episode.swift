@@ -20,7 +20,7 @@ struct Episode{
     init(item : RSSFeedItem) {
         self.title = item.title!
         self.date = item.pubDate!
-        self.description = item.description!
+        self.description = item.iTunes?.iTunesSubtitle ?? item.description ?? ""
         self.imageUrl = item.iTunes?.iTunesImage?.attributes?.href 
     }
     
