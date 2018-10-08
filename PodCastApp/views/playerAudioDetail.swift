@@ -13,6 +13,7 @@ class PlayerAudioDetail : UIView{
     
     var episodeToPlay : Episode!{
         didSet{
+            self.authorLabel.text = episodeToPlay.author
             self.episodeTitle.text = episodeToPlay.title
             let url = URL(string: episodeToPlay.imageUrl ?? "")
             self.episodeImage.sd_setImage(with: url, completed: nil)
@@ -21,6 +22,10 @@ class PlayerAudioDetail : UIView{
     @IBAction func backPressed(_ sender: Any) {
         self.removeFromSuperview()
     }
+    @IBAction func playPausePressed(_ sender: Any) {
+        
+    }
+    @IBOutlet weak var authorLabel: UILabel!
     
     @IBOutlet weak var episodeImage: UIImageView!
     
@@ -28,7 +33,7 @@ class PlayerAudioDetail : UIView{
     
     @IBOutlet weak var episodeTitle: UILabel!{
         didSet{
-          //  episodeTitle.numberOfLines = 0
+            episodeTitle.numberOfLines = 0
         }
     }
 }
