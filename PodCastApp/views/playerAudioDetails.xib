@@ -14,11 +14,11 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="i3Q-Vb-lTi" customClass="PlayerAudioDetail" customModule="PodCastApp" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="375" height="771"/>
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="0Wo-8M-6T2">
-                    <rect key="frame" x="24" y="40" width="327" height="711"/>
+                    <rect key="frame" x="24" y="40" width="327" height="607"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gD6-mT-F5e">
                             <rect key="frame" x="0.0" y="0.0" width="327" height="30"/>
@@ -86,19 +86,19 @@
                         <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="zj6-LZ-0wy">
                             <rect key="frame" x="0.0" y="492" width="327" height="110"/>
                             <subviews>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="arQ-bP-Skc">
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="arQ-bP-Skc">
                                     <rect key="frame" x="0.0" y="0.0" width="109" height="110"/>
+                                    <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                     <state key="normal" image="rewind15"/>
                                 </button>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AtB-fU-gaY">
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AtB-fU-gaY">
                                     <rect key="frame" x="109" y="0.0" width="109" height="110"/>
+                                    <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                     <state key="normal" image="pause"/>
-                                    <connections>
-                                        <action selector="playPausePressed:" destination="i3Q-Vb-lTi" eventType="touchUpInside" id="efX-AH-6pv"/>
-                                    </connections>
                                 </button>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dky-BP-TNQ">
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dky-BP-TNQ">
                                     <rect key="frame" x="218" y="0.0" width="109" height="110"/>
+                                    <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                     <state key="normal" image="fastforward15"/>
                                 </button>
                             </subviews>
@@ -107,19 +107,19 @@
                             </constraints>
                         </stackView>
                         <stackView opaque="NO" contentMode="scaleToFill" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="C1b-Dr-mPS">
-                            <rect key="frame" x="0.0" y="602" width="327" height="109"/>
+                            <rect key="frame" x="0.0" y="602" width="327" height="5"/>
                             <subviews>
                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="muted_volume" translatesAutoresizingMaskIntoConstraints="NO" id="8RN-9y-DgN">
-                                    <rect key="frame" x="0.0" y="0.0" width="50" height="109"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="50" height="5"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="50" id="UFW-AB-JWY"/>
                                     </constraints>
                                 </imageView>
                                 <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="iRF-Qo-fes">
-                                    <rect key="frame" x="50" y="0.0" width="227" height="110"/>
+                                    <rect key="frame" x="50" y="0.0" width="227" height="6"/>
                                 </slider>
                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="max_volume" translatesAutoresizingMaskIntoConstraints="NO" id="n5q-hp-XTX">
-                                    <rect key="frame" x="277" y="0.0" width="50" height="109"/>
+                                    <rect key="frame" x="277" y="0.0" width="50" height="5"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="50" id="Pmd-fi-A7K"/>
                                     </constraints>
@@ -142,6 +142,7 @@
                 <outlet property="authorLabel" destination="Rbc-WJ-eUN" id="JMg-nV-0G4"/>
                 <outlet property="episodeImage" destination="4SQ-B6-1m6" id="CI4-wK-qxq"/>
                 <outlet property="episodeTitle" destination="bKN-rV-tD7" id="eos-gm-1WG"/>
+                <outlet property="playPauseButton" destination="AtB-fU-gaY" id="57i-G8-7Ez"/>
             </connections>
             <point key="canvasLocation" x="52" y="191"/>
         </view>
