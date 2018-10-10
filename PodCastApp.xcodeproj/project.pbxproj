@@ -19,6 +19,7 @@
 		163B8B1C216B7E1C003A76F1 /* stringHTTPSecured.swift in Sources */ = {isa = PBXBuildFile; fileRef = 163B8B1B216B7E1C003A76F1 /* stringHTTPSecured.swift */; };
 		164A4DEC216B839E00948ACA /* toEpisodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164A4DEB216B839E00948ACA /* toEpisodes.swift */; };
 		164A4DEE216BABD400948ACA /* playerAudioDetails.xib in Resources */ = {isa = PBXBuildFile; fileRef = 164A4DED216BABD400948ACA /* playerAudioDetails.xib */; };
+		165F6872216E7191005999AC /* CmTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 165F6871216E7190005999AC /* CmTime.swift */; };
 		16AD687D21694D5E00C1C7CD /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16AD687C21694D5E00C1C7CD /* APIService.swift */; };
 		16AD687F216965D600C1C7CD /* PodCastCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 16AD687E216965D600C1C7CD /* PodCastCell.xib */; };
 		16AD6881216967F000C1C7CD /* PodCastTabelViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16AD6880216967F000C1C7CD /* PodCastTabelViewCell.swift */; };
@@ -45,6 +46,7 @@
 		163B8B1B216B7E1C003A76F1 /* stringHTTPSecured.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = stringHTTPSecured.swift; sourceTree = "<group>"; };
 		164A4DEB216B839E00948ACA /* toEpisodes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = toEpisodes.swift; sourceTree = "<group>"; };
 		164A4DED216BABD400948ACA /* playerAudioDetails.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = playerAudioDetails.xib; sourceTree = "<group>"; };
+		165F6871216E7190005999AC /* CmTime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CmTime.swift; sourceTree = "<group>"; };
 		16AD687C21694D5E00C1C7CD /* APIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
 		16AD687E216965D600C1C7CD /* PodCastCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PodCastCell.xib; sourceTree = "<group>"; };
 		16AD6880216967F000C1C7CD /* PodCastTabelViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodCastTabelViewCell.swift; sourceTree = "<group>"; };
@@ -128,6 +130,7 @@
 			children = (
 				163B8B1B216B7E1C003A76F1 /* stringHTTPSecured.swift */,
 				164A4DEB216B839E00948ACA /* toEpisodes.swift */,
+				165F6871216E7190005999AC /* CmTime.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -314,6 +317,7 @@
 				16F95142216A4E540061D7CA /* EpisodesController.swift in Sources */,
 				164A4DEC216B839E00948ACA /* toEpisodes.swift in Sources */,
 				1609CB92216BC231001E38A8 /* playerAudioDetail.swift in Sources */,
+				165F6872216E7191005999AC /* CmTime.swift in Sources */,
 				162347FC2164DBDE00EEC058 /* PodCast.swift in Sources */,
 				16AD687D21694D5E00C1C7CD /* APIService.swift in Sources */,
 				16AD6881216967F000C1C7CD /* PodCastTabelViewCell.swift in Sources */,

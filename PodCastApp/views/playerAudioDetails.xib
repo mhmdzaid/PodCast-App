@@ -39,11 +39,14 @@
                                 <constraint firstAttribute="width" secondItem="4SQ-B6-1m6" secondAttribute="height" id="sbY-tz-O2l"/>
                             </constraints>
                         </imageView>
-                        <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="XGf-hw-MkR">
+                        <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="XGf-hw-MkR">
                             <rect key="frame" x="-2" y="357" width="331" height="36"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="35" id="2zr-Bj-cGu"/>
                             </constraints>
+                            <connections>
+                                <action selector="audioSliderDidchange:" destination="i3Q-Vb-lTi" eventType="valueChanged" id="jLb-Fw-KdS"/>
+                            </connections>
                         </slider>
                         <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="150" translatesAutoresizingMaskIntoConstraints="NO" id="5Nt-mu-D0J">
                             <rect key="frame" x="0.0" y="392" width="327" height="25"/>
@@ -90,6 +93,9 @@
                                     <rect key="frame" x="0.0" y="0.0" width="109" height="110"/>
                                     <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                     <state key="normal" image="rewind15"/>
+                                    <connections>
+                                        <action selector="rewindButtonPressed:" destination="i3Q-Vb-lTi" eventType="touchUpInside" id="dLY-UO-52M"/>
+                                    </connections>
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AtB-fU-gaY">
                                     <rect key="frame" x="109" y="0.0" width="109" height="110"/>
@@ -100,6 +106,9 @@
                                     <rect key="frame" x="218" y="0.0" width="109" height="110"/>
                                     <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                     <state key="normal" image="fastforward15"/>
+                                    <connections>
+                                        <action selector="fastForwardButtonPressed:" destination="i3Q-Vb-lTi" eventType="touchUpInside" id="Xdc-QS-VDL"/>
+                                    </connections>
                                 </button>
                             </subviews>
                             <constraints>
@@ -117,6 +126,9 @@
                                 </imageView>
                                 <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="iRF-Qo-fes">
                                     <rect key="frame" x="50" y="0.0" width="227" height="6"/>
+                                    <connections>
+                                        <action selector="auidoVolumeDidChange:" destination="i3Q-Vb-lTi" eventType="valueChanged" id="Q5r-l6-1zx"/>
+                                    </connections>
                                 </slider>
                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="max_volume" translatesAutoresizingMaskIntoConstraints="NO" id="n5q-hp-XTX">
                                     <rect key="frame" x="277" y="0.0" width="50" height="5"/>
@@ -140,11 +152,13 @@
             <connections>
                 <outlet property="audioSlider" destination="XGf-hw-MkR" id="rVq-6h-f0p"/>
                 <outlet property="authorLabel" destination="Rbc-WJ-eUN" id="JMg-nV-0G4"/>
+                <outlet property="currentTimeLabel" destination="TTZ-vE-jEs" id="B1c-5z-OrX"/>
+                <outlet property="durationLabel" destination="oS2-sw-fgj" id="aNf-9s-deM"/>
                 <outlet property="episodeImage" destination="4SQ-B6-1m6" id="CI4-wK-qxq"/>
                 <outlet property="episodeTitle" destination="bKN-rV-tD7" id="eos-gm-1WG"/>
                 <outlet property="playPauseButton" destination="AtB-fU-gaY" id="57i-G8-7Ez"/>
             </connections>
-            <point key="canvasLocation" x="52" y="191"/>
+            <point key="canvasLocation" x="306" y="230"/>
         </view>
     </objects>
     <resources>

@@ -25,8 +25,26 @@ class PlayerAudioDetail : UIView{
     }
     
     
+    fileprivate func observePlayerCurrentTime() {
+        let interval = CMTimeMake(1, 2)
+        player.addPeriodicTimeObserver(forInterval: interval, queue: .main) { (time) in
+            self.currentTimeLabel.text = time.stringToTimerFormat()
+            self.durationLabel.text = self.player.currentItem?.duration.stringToTimerFormat()
+            self.updatAudioSlider()
+        }
+    }
+    
+    
+    fileprivate func updatAudioSlider(){
+        let current = CMTimeGetSeconds(player.currentTime())
+        let duration = CMTimeGetSeconds(player.currentItem?.duration ?? CMTimeMake(1,1))
+        let percentage = current/duration
+        audioSlider.value = Float(percentage)
+    }
+    
     override func awakeFromNib() {
         super.awakeFromNib()
+        observePlayerCurrentTime()
         let time = CMTimeMake(1,3)
         let times = [NSValue(time: time)]
         player.addBoundaryTimeObserver(forTimes: times, queue: .main) {
@@ -62,7 +80,9 @@ class PlayerAudioDetail : UIView{
     @IBAction func backPressed(_ sender: Any) {
         self.removeFromSuperview()
     }
-
+    @IBOutlet weak var currentTimeLabel: UILabel!
+    
+    @IBOutlet weak var durationLabel: UILabel!
     @IBOutlet weak var authorLabel: UILabel!
     
     @IBOutlet weak var episodeImage: UIImageView!
@@ -84,6 +104,27 @@ class PlayerAudioDetail : UIView{
             player.pause()
         }
     }
+    
+    @IBAction func audioSliderDidchange(_ sender: Any) {
+        let percentage = audioSlider.value
+        guard let duration  = player.currentItem?.duration else {return}
+        let durationInSeconds = CMTimeGetSeconds(duration)
+        let SeekTimeInSeconds = durationInSeconds * Float64(percentage)
+        let seekTime = CMTimeMakeWithSeconds(SeekTimeInSeconds, 1)
+        player.seek(to: seekTime )
+        player.play()
+        
+    }
+    
+    
+    
+    @IBAction func fastForwardButtonPressed(_ sender: Any) {
+    }
+    @IBAction func rewindButtonPressed(_ sender: Any) {
+    }
+    @IBAction func auidoVolumeDidChange(_ sender: Any) {
+    }
+    
     @IBOutlet weak var audioSlider: UISlider!
     
     @IBOutlet weak var episodeTitle: UILabel!{
