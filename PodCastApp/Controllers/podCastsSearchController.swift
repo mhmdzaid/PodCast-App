@@ -14,16 +14,17 @@ class podCastSearchController : UITableViewController,UISearchBarDelegate{
     
     let cellID = "cellID"
     
-    
+    let searchController = UISearchController(searchResultsController: nil)
+
     override func viewDidLoad() {
         super.viewDidLoad()
          setUpSearchController()
          setUpTableView()
+        self.searchBar(searchController.searchBar, textDidChange: "voong")
     }
     
  
     fileprivate func setUpSearchController(){
-        let searchController = UISearchController(searchResultsController: nil)
         navigationItem.searchController = searchController
         navigationItem.hidesSearchBarWhenScrolling = false
         searchController.searchBar.delegate = self
