@@ -44,6 +44,30 @@ class EpisodesController : UITableViewController{
     
     //MARK:- tableView Methods
     
+    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
+        activityIndicator.color = UIColor.gray
+        activityIndicator.startAnimating()
+        return activityIndicator
+    }
+    override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+       tableView.tableFooterView = UIView()
+        let label = UILabel()
+        label.text = "Loading ... "
+        label.font = UIFont.systemFont(ofSize: 19, weight: .semibold)
+        label.textColor = .purple
+        label.textAlignment = .center
+        return label
+    }
+    
+    
+    override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return self.Episodes.isEmpty ? 90: 0
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return Episodes.isEmpty ? 70 : 0
+    }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let episode = self.Episodes[indexPath.row]

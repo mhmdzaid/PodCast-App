@@ -11,6 +11,10 @@ import UIKit
 import AVKit
 class PlayerAudioDetail : UIView{
     
+    deinit {
+        print("PlayerAudioDetail View has been reclaimed ")
+    }
+    
    var episodeToPlay : Episode!{
         didSet{
             self.authorLabel.text = episodeToPlay.author
@@ -27,10 +31,10 @@ class PlayerAudioDetail : UIView{
     
     fileprivate func observePlayerCurrentTime() {
         let interval = CMTimeMake(1, 2)
-        player.addPeriodicTimeObserver(forInterval: interval, queue: .main) { (time) in
-            self.currentTimeLabel.text = time.stringToTimerFormat()
-            self.durationLabel.text = self.player.currentItem?.duration.stringToTimerFormat()
-            self.updatAudioSlider()
+        player.addPeriodicTimeObserver(forInterval: interval, queue: .main) { [weak self](time) in
+            self?.currentTimeLabel.text = time.stringToTimerFormat()
+            self?.durationLabel.text = self?.player.currentItem?.duration.stringToTimerFormat()
+            self?.updatAudioSlider()
         }
     }
     
@@ -47,9 +51,9 @@ class PlayerAudioDetail : UIView{
         observePlayerCurrentTime()
         let time = CMTimeMake(1,3)
         let times = [NSValue(time: time)]
-        player.addBoundaryTimeObserver(forTimes: times, queue: .main) {
+        player.addBoundaryTimeObserver(forTimes: times, queue: .main) { [weak self] in
             print("finished buffering ")
-           self.enlargeImageView() //enlarge image when stream buffering finished
+           self?.enlargeImageView() //enlarge image when stream buffering finished
         }
         
         

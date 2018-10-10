@@ -15,11 +15,13 @@ class APIService {
     
     func fetchEpisodes(url : String , completion : @escaping(_ epsiodes : [Episode])->()){
         guard let feedURL = URL(string: url)else {return}
-        let feedParser = FeedParser(URL: feedURL)
-        feedParser?.parseAsync(result: { (result) in
-            guard let feed  = result.rssFeed else{return}
-            completion(feed.toEpisodes())
-        })
+        DispatchQueue.global(qos: .userInteractive).async {
+            let feedParser = FeedParser(URL: feedURL)
+            feedParser?.parseAsync(result: { (result) in
+                guard let feed  = result.rssFeed else{return}
+                completion(feed.toEpisodes())
+            })
+        }
     }
     
     func fetchPodCasts(searchText : String,completion: @escaping(_ podCasts : [PodCast])->()) {

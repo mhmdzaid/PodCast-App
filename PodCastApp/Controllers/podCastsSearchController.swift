@@ -20,7 +20,6 @@ class podCastSearchController : UITableViewController,UISearchBarDelegate{
         super.viewDidLoad()
          setUpSearchController()
          setUpTableView()
-        self.searchBar(searchController.searchBar, textDidChange: "voong")
     }
     
  
@@ -40,15 +39,19 @@ class podCastSearchController : UITableViewController,UISearchBarDelegate{
     
     
     
+    var timer : Timer?
+    
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         print(searchText)
+        timer?.invalidate()
+        timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false, block: { (_) in
+                //Implementing Alamofire to get podcasts from the API
+            APIService.shared.fetchPodCasts(searchText: searchText) { (returnedPodCasts) in
+                self.podCasts = returnedPodCasts
+                self.tableView.reloadData()
+            }
+        })
         
-        //Implementing Alamofire to get podcasts from the API
-        APIService.shared.fetchPodCasts(searchText: searchText) { (returnedPodCasts) in
-            self.podCasts = returnedPodCasts
-            self.tableView.reloadData()
-        }
-   
     }
     
     
@@ -74,7 +77,7 @@ class podCastSearchController : UITableViewController,UISearchBarDelegate{
     }
     
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return podCasts.count > 0 ? 0 : 250
+        return podCasts.isEmpty ? 250 : 0
     }
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return podCasts.count
