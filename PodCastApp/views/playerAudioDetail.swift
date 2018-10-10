@@ -116,13 +116,22 @@ class PlayerAudioDetail : UIView{
         
     }
     
-    
+    fileprivate func handleRewind(delta : Int64){
+        let fifteenSeconds  = CMTimeMake(delta, 1)
+        player.currentTime()
+        let seekTime = CMTimeAdd(player.currentTime(), fifteenSeconds)
+        player.seek(to:seekTime)
+    }
     
     @IBAction func fastForwardButtonPressed(_ sender: Any) {
+       handleRewind(delta: 15)
     }
+    
     @IBAction func rewindButtonPressed(_ sender: Any) {
+        handleRewind(delta: -15)
     }
-    @IBAction func auidoVolumeDidChange(_ sender: Any) {
+    @IBAction func auidoVolumeDidChange(_ sender: UISlider) {
+        player.volume = sender.value
     }
     
     @IBOutlet weak var audioSlider: UISlider!

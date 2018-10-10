@@ -124,7 +124,7 @@
                                         <constraint firstAttribute="width" constant="50" id="UFW-AB-JWY"/>
                                     </constraints>
                                 </imageView>
-                                <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="iRF-Qo-fes">
+                                <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="iRF-Qo-fes">
                                     <rect key="frame" x="50" y="0.0" width="227" height="6"/>
                                     <connections>
                                         <action selector="auidoVolumeDidChange:" destination="i3Q-Vb-lTi" eventType="valueChanged" id="Q5r-l6-1zx"/>
