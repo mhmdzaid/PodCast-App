@@ -98,11 +98,11 @@
 				162347F72164D7BE00EEC058 /* Controllers */,
 				162347E32164BD5E00EEC058 /* AppDelegate.swift */,
 				162347E52164BD5E00EEC058 /* ViewController.swift */,
+				162347F52164BDD000EEC058 /* MainTabBarController.swift */,
 				162347E72164BD5E00EEC058 /* Main.storyboard */,
 				162347EA2164BD5E00EEC058 /* Assets.xcassets */,
 				162347EC2164BD5E00EEC058 /* LaunchScreen.storyboard */,
 				162347EF2164BD5F00EEC058 /* Info.plist */,
-				162347F52164BDD000EEC058 /* MainTabBarController.swift */,
 			);
 			path = PodCastApp;
 			sourceTree = "<group>";

@@ -11,9 +11,14 @@ import UIKit
 import AVKit
 class PlayerAudioDetail : UIView{
     
+    
+    static func initFromNib()->PlayerAudioDetail{
+        return Bundle.main.loadNibNamed("playerAudioDetails", owner: self, options: nil)?.first as! PlayerAudioDetail
+    }
     deinit {
         print("PlayerAudioDetail View has been reclaimed ")
     }
+    
     
    var episodeToPlay : Episode!{
         didSet{
@@ -48,6 +53,7 @@ class PlayerAudioDetail : UIView{
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        self.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleMaximize)))
         observePlayerCurrentTime()
         let time = CMTimeMake(1,3)
         let times = [NSValue(time: time)]
@@ -55,10 +61,13 @@ class PlayerAudioDetail : UIView{
             print("finished buffering ")
            self?.enlargeImageView() //enlarge image when stream buffering finished
         }
-        
-        
     }
     
+    
+    @objc func handleMaximize(){
+      let mainTabBarController = UIApplication.shared.keyWindow?.rootViewController as! MainTabBarController
+      mainTabBarController.maximizePlayerDetails(episode: nil)
+    }
     fileprivate func dislargeImageView(){
         UIView.animate(withDuration: 1 , delay: 0.2, usingSpringWithDamping: 0.7, initialSpringVelocity: 1, options: .curveEaseInOut, animations: {
             self.episodeImage.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
@@ -82,7 +91,8 @@ class PlayerAudioDetail : UIView{
         return audioPlayer
     }()
     @IBAction func backPressed(_ sender: Any) {
-        self.removeFromSuperview()
+        let mainTabBarController = UIApplication.shared.keyWindow?.rootViewController as! MainTabBarController
+        mainTabBarController.minimizePlayerDetails()
     }
     @IBOutlet weak var currentTimeLabel: UILabel!
     
