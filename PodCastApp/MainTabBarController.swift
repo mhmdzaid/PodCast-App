@@ -44,6 +44,8 @@ class MainTabBarController : UITabBarController{
         UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
             self.view.layoutIfNeeded()
             self.tabBar.transform = .identity
+            self.playerDetailView.miniPlayerView.isHidden = false
+            self.playerDetailView.mainStackForAllContents.isHidden = true
         })
     }
     
@@ -57,6 +59,8 @@ class MainTabBarController : UITabBarController{
         UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
             self.view.layoutIfNeeded()
             self.tabBar.transform = CGAffineTransform(translationX: 0, y: 100)
+            self.playerDetailView.miniPlayerView.isHidden = true
+            self.playerDetailView.mainStackForAllContents.isHidden = false
         })
     }
     

@@ -22,10 +22,12 @@ class PlayerAudioDetail : UIView{
     
    var episodeToPlay : Episode!{
         didSet{
+            self.miniEpisodeTitle.text = episodeToPlay.title
             self.authorLabel.text = episodeToPlay.author
             self.episodeTitle.text = episodeToPlay.title
             let url = URL(string: episodeToPlay.imageUrl ?? "")
             self.episodeImage.sd_setImage(with: url, completed: nil)
+            self.miniEpisodeImage.sd_setImage(with: url, completed: nil)
             self.episodeImage.layer.cornerRadius = 5
             self.episodeImage.clipsToBounds = true
             self.episodeImage.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
@@ -110,10 +112,12 @@ class PlayerAudioDetail : UIView{
     @objc func playPauseEpisode(){
         if player.timeControlStatus == .paused{
             playPauseButton.setImage(#imageLiteral(resourceName: "pause"), for: .normal)
+            miniPlayPauseButton.setImage(#imageLiteral(resourceName: "pause"), for: .normal)
             enlargeImageView()
             player.play()
         }else{
             playPauseButton.setImage(#imageLiteral(resourceName: "play"), for: .normal)
+            miniPlayPauseButton.setImage(#imageLiteral(resourceName: "play"), for: .normal)
             dislargeImageView()
             player.pause()
         }
@@ -155,4 +159,15 @@ class PlayerAudioDetail : UIView{
             episodeTitle.numberOfLines = 0
         }
     }
+    
+    @IBOutlet weak var mainStackForAllContents: UIStackView!
+    @IBOutlet weak var miniPlayerView: UIView!
+    @IBOutlet weak var miniEpisodeImage: UIImageView!
+    @IBOutlet weak var miniEpisodeTitle: UILabel!
+    @IBOutlet weak var miniPlayPauseButton: UIButton!{
+        didSet{
+            miniPlayPauseButton.addTarget(self, action: #selector(playPauseEpisode), for: .touchUpInside)
+        }
+    }
+
 }
