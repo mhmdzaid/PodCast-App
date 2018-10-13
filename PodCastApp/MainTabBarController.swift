@@ -13,7 +13,7 @@ class MainTabBarController : UITabBarController{
     
     var maximzePlayerDetailsConstraint : NSLayoutConstraint!
     var minimizePlayerDetailsConstraint :NSLayoutConstraint!
-    
+    var bottomPlayerDetailsConstraint : NSLayoutConstraint!
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpMainTapBarController()
@@ -29,38 +29,40 @@ class MainTabBarController : UITabBarController{
         
         maximzePlayerDetailsConstraint = playerDetailView.topAnchor.constraint(equalTo: view.topAnchor, constant: view.frame.height)
         maximzePlayerDetailsConstraint.isActive = true
+        bottomPlayerDetailsConstraint =  playerDetailView.bottomAnchor.constraint(equalTo: view.bottomAnchor,constant: view.frame.height)
+        bottomPlayerDetailsConstraint.isActive = true
         minimizePlayerDetailsConstraint = playerDetailView.topAnchor.constraint(equalTo: tabBar.topAnchor, constant: -64)
         //minimizePlayerDetailsConstraint.isActive = true
         playerDetailView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         playerDetailView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        playerDetailView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-       
     }
     
     
     @objc func minimizePlayerDetails(){
         maximzePlayerDetailsConstraint.isActive = false
         minimizePlayerDetailsConstraint.isActive = true
+        bottomPlayerDetailsConstraint.constant = view.frame.height
         UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
             self.view.layoutIfNeeded()
             self.tabBar.transform = .identity
-            self.playerDetailView.miniPlayerView.isHidden = false
-            self.playerDetailView.mainStackForAllContents.isHidden = true
+            self.playerDetailView.miniPlayerView.alpha = 1
+            self.playerDetailView.mainStackForAllContents.alpha = 0
         })
     }
     
      func maximizePlayerDetails(episode : Episode?){
+        minimizePlayerDetailsConstraint.isActive = false
         maximzePlayerDetailsConstraint.isActive = true
         maximzePlayerDetailsConstraint.constant = 0
-        minimizePlayerDetailsConstraint.isActive = false
+        bottomPlayerDetailsConstraint.constant = 0
         if episode != nil{
             playerDetailView.episodeToPlay = episode
         }
         UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
             self.view.layoutIfNeeded()
             self.tabBar.transform = CGAffineTransform(translationX: 0, y: 100)
-            self.playerDetailView.miniPlayerView.isHidden = true
-            self.playerDetailView.mainStackForAllContents.isHidden = false
+            self.playerDetailView.miniPlayerView.alpha = 0
+            self.playerDetailView.mainStackForAllContents.alpha = 1
         })
     }
     

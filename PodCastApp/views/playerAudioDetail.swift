@@ -22,6 +22,7 @@ class PlayerAudioDetail : UIView{
     
    var episodeToPlay : Episode!{
         didSet{
+            self.playPauseButton.setImage(#imageLiteral(resourceName: "pause"), for: .normal)
             self.miniEpisodeTitle.text = episodeToPlay.title
             self.authorLabel.text = episodeToPlay.author
             self.episodeTitle.text = episodeToPlay.title
@@ -53,9 +54,13 @@ class PlayerAudioDetail : UIView{
         audioSlider.value = Float(percentage)
     }
     
+    
+    var panGesture : UIPanGestureRecognizer!
     override func awakeFromNib() {
         super.awakeFromNib()
         self.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleMaximize)))
+        panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePan))
+        self.addGestureRecognizer(panGesture)
         observePlayerCurrentTime()
         let time = CMTimeMake(1,3)
         let times = [NSValue(time: time)]
@@ -66,10 +71,50 @@ class PlayerAudioDetail : UIView{
     }
     
     
+    @objc func handlePan(gesture : UIPanGestureRecognizer){
+        if gesture.state == .changed{
+            handleGestureChanged(gesture)
+        }else if gesture.state == .ended{
+            handleGestureEnded(gesture)
+        }
+        
+    }
+    
+    
+    func handleGestureChanged(_ gesture : UIPanGestureRecognizer){
+        let translation = gesture.translation(in: superview)
+        self.transform = CGAffineTransform(translationX: 0, y: translation.y)
+        miniPlayerView.alpha = 1 + translation.y/200
+        mainStackForAllContents.alpha = -translation.y/200
+    }
+    
+    
+    func handleGestureEnded(_ gesture : UIPanGestureRecognizer){
+        let translation = gesture.translation(in: superview)
+        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+            self.transform = .identity
+            if translation.y < -200{
+                let mainTabBarController = UIApplication.shared.keyWindow?.rootViewController as! MainTabBarController
+                mainTabBarController.maximizePlayerDetails(episode: nil)
+                gesture.isEnabled = false
+                self.miniPlayerView.alpha = 0
+                self.mainStackForAllContents.alpha = 1
+            }else{
+                self.miniPlayerView.alpha = 1
+                self.mainStackForAllContents.alpha = 0
+            }
+        })
+    }
+    
+    
     @objc func handleMaximize(){
       let mainTabBarController = UIApplication.shared.keyWindow?.rootViewController as! MainTabBarController
       mainTabBarController.maximizePlayerDetails(episode: nil)
+      panGesture.isEnabled = false
     }
+    
+    
+    
     fileprivate func dislargeImageView(){
         UIView.animate(withDuration: 1 , delay: 0.2, usingSpringWithDamping: 0.7, initialSpringVelocity: 1, options: .curveEaseInOut, animations: {
             self.episodeImage.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
@@ -95,6 +140,7 @@ class PlayerAudioDetail : UIView{
     @IBAction func backPressed(_ sender: Any) {
         let mainTabBarController = UIApplication.shared.keyWindow?.rootViewController as! MainTabBarController
         mainTabBarController.minimizePlayerDetails()
+        panGesture.isEnabled = true
     }
     @IBOutlet weak var currentTimeLabel: UILabel!
     
