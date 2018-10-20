@@ -56,11 +56,14 @@ class PlayerAudioDetail : UIView{
     
     
     var panGesture : UIPanGestureRecognizer!
+    var dimissalGesture : UIPanGestureRecognizer!
     override func awakeFromNib() {
         super.awakeFromNib()
+        dimissalGesture = UIPanGestureRecognizer(target: self, action: #selector(handleDismissalPan))
+        mainStackForAllContents.addGestureRecognizer(dimissalGesture)
         self.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleMaximize)))
         panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePan))
-        self.addGestureRecognizer(panGesture)
+        miniPlayerView.addGestureRecognizer(panGesture)
         observePlayerCurrentTime()
         let time = CMTimeMake(1,3)
         let times = [NSValue(time: time)]
@@ -70,6 +73,23 @@ class PlayerAudioDetail : UIView{
         }
     }
     
+    @objc func handleDismissalPan(gesture : UIPanGestureRecognizer){
+         let translation = gesture.translation(in: self.superview)
+        if gesture.state == .changed{
+            UIView.animate(withDuration: 0, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+                self.mainStackForAllContents.transform = CGAffineTransform(translationX: 0, y: translation.y)
+            })
+        }else if gesture.state == .ended{
+            if translation.y > 70{
+                let mainTabBarController = UIApplication.shared.keyWindow?.rootViewController as! MainTabBarController
+                mainTabBarController.minimizePlayerDetails()
+            }else{
+                UIView.animate(withDuration: 0, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+                  self.mainStackForAllContents.transform = .identity
+                })
+            }
+        }
+    }
     
     @objc func handlePan(gesture : UIPanGestureRecognizer){
         if gesture.state == .changed{
@@ -96,7 +116,6 @@ class PlayerAudioDetail : UIView{
             if translation.y < -200{
                 let mainTabBarController = UIApplication.shared.keyWindow?.rootViewController as! MainTabBarController
                 mainTabBarController.maximizePlayerDetails(episode: nil)
-                gesture.isEnabled = false
                 self.miniPlayerView.alpha = 0
                 self.mainStackForAllContents.alpha = 1
             }else{
@@ -110,7 +129,7 @@ class PlayerAudioDetail : UIView{
     @objc func handleMaximize(){
       let mainTabBarController = UIApplication.shared.keyWindow?.rootViewController as! MainTabBarController
       mainTabBarController.maximizePlayerDetails(episode: nil)
-      panGesture.isEnabled = false
+      
     }
     
     
@@ -140,7 +159,7 @@ class PlayerAudioDetail : UIView{
     @IBAction func backPressed(_ sender: Any) {
         let mainTabBarController = UIApplication.shared.keyWindow?.rootViewController as! MainTabBarController
         mainTabBarController.minimizePlayerDetails()
-        panGesture.isEnabled = true
+        
     }
     @IBOutlet weak var currentTimeLabel: UILabel!
     

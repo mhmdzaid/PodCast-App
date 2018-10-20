@@ -63,6 +63,7 @@ class MainTabBarController : UITabBarController{
             self.tabBar.transform = CGAffineTransform(translationX: 0, y: 100)
             self.playerDetailView.miniPlayerView.alpha = 0
             self.playerDetailView.mainStackForAllContents.alpha = 1
+            self.playerDetailView.mainStackForAllContents.transform = .identity
         })
     }
     
